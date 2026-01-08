@@ -3,66 +3,105 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2026 Time Capsule</title> 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <title>Our Time Capsule</title>
+    
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#ffe4e1">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
-            --bg-color: #0f172a;
-            --card-bg: #1e293b;
-            --accent: #38bdf8;
-            --gold: #fbbf24;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --danger: #f43f5e;
-            --success: #22c55e;
+            --bg-gradient: linear-gradient(135deg, #fff0f5 0%, #ffe4e1 100%);
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --primary: #d8809e; /* Dusty Rose */
+            --accent: #b0657b; /* Deep Rose */
+            --gold: #d4af37;
+            --text-main: #5d4037;
+            --text-muted: #8d6e63;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-color);
+            font-family: 'Lato', sans-serif;
+            background: var(--bg-gradient);
             color: var(--text-main);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             padding: 2rem;
+            overflow-x: hidden;
+        }
+
+        /* --- Floating Hearts Background Animation --- */
+        .bg-heart {
+            position: fixed;
+            color: rgba(216, 128, 158, 0.1);
+            z-index: -1;
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            50% { opacity: 0.5; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
         }
 
         /* --- Header & Countdown --- */
         header {
             text-align: center;
             margin-bottom: 3rem;
-            animation: fadeIn 1s ease;
+            position: relative;
+            z-index: 1;
         }
 
         h1 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 4.5rem;
+            margin-bottom: 0.2rem;
+            color: var(--accent);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.05);
+            line-height: 1.2;
+        }
+
+        .subtitle {
             font-family: 'Playfair Display', serif;
-            font-size: 3rem;
-            margin-bottom: 0.5rem;
-            background: linear-gradient(to right, var(--accent), #a855f7);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-style: italic;
+            color: var(--text-muted);
+            font-size: 1.1rem;
         }
 
         .countdown-container {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 1rem 2rem;
+            background: #fff;
+            padding: 1rem 2.5rem;
             border-radius: 50px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 25px rgba(216, 128, 158, 0.15);
             display: inline-block;
-            margin-top: 1rem;
+            margin-top: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.5);
         }
 
         #countdown {
-            font-family: 'Inter', monospace;
-            font-weight: 600;
-            color: var(--gold);
-            letter-spacing: 1px;
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            color: var(--accent);
+            font-size: 1.2rem;
+        }
+
+        .fa-heart-pulse {
+            color: var(--primary);
+            animation: heartbeat 1.5s infinite;
+            margin-right: 8px;
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
         }
 
         /* --- Grid Layout --- */
@@ -71,29 +110,32 @@
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 1.5rem;
             width: 100%;
-            max-width: 1200px;
+            max-width: 1100px;
+            z-index: 1;
         }
 
         /* --- Month Card --- */
         .card {
             background: var(--card-bg);
-            border-radius: 16px;
-            padding: 1.5rem;
-            height: 200px;
+            border-radius: 24px;
+            padding: 1.8rem;
+            height: 220px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: all 0.4s ease;
             cursor: pointer;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
             position: relative;
-            overflow: hidden;
         }
 
         .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            border-color: var(--accent);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(216, 128, 158, 0.2);
+            border-color: var(--primary);
+            background: #fff;
         }
 
         .card-header {
@@ -103,37 +145,56 @@
         }
 
         .month-name {
-            font-size: 1.5rem;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
             font-weight: 600;
+            color: var(--text-main);
         }
 
         .status-icon {
-            font-size: 1.2rem;
+            font-size: 1.4rem;
+            opacity: 0.8;
+            transition: color 0.3s;
         }
 
         .status-text {
-            font-size: 0.85rem;
-            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-family: 'Lato', sans-serif;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-weight: 300;
             margin-top: auto;
         }
 
-        /* Status colors */
-        .card.locked { border-left: 4px solid var(--gold); }
-        .card.locked .status-icon { color: var(--gold); }
-        .card.unlocked { border-left: 4px solid var(--success); }
-        .card.empty { border-left: 4px solid var(--text-muted); }
+        /* Status Styling */
+        .card.locked { 
+            border-bottom: 6px solid var(--primary); 
+        }
+        .card.locked .status-icon { color: var(--primary); }
+        .card.locked .status-text { color: var(--primary); }
+
+        .card.unlocked { 
+            border-bottom: 6px solid var(--gold); 
+        }
+        .card.unlocked .status-icon { color: var(--gold); }
+        
+        .card.empty { 
+            border-bottom: 6px solid #e0e0e0; 
+        }
+        .card.empty .status-icon { color: #ccc; }
 
         /* --- Modal (Editor) --- */
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(93, 64, 55, 0.6); /* Warm brown overlay */
+            backdrop-filter: blur(3px);
             display: flex;
             justify-content: center;
             align-items: center;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.4s ease;
             z-index: 100;
         }
 
@@ -143,15 +204,15 @@
         }
 
         .modal {
-            background: var(--card-bg);
+            background: #fff;
             width: 90%;
             max-width: 600px;
-            border-radius: 16px;
-            padding: 2rem;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-            transform: scale(0.9);
-            transition: transform 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 2.5rem;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+            transform: scale(0.95);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 2px solid #fff0f5;
         }
 
         .modal-overlay.active .modal {
@@ -163,6 +224,14 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 1.5rem;
+            border-bottom: 1px solid #f0f0f0;
+            padding-bottom: 1rem;
+        }
+
+        .modal-header h2 {
+            font-family: 'Playfair Display', serif;
+            color: var(--accent);
+            font-size: 2rem;
         }
 
         .close-btn {
@@ -171,25 +240,30 @@
             color: var(--text-muted);
             cursor: pointer;
             font-size: 1.5rem;
+            transition: transform 0.2s;
         }
+        .close-btn:hover { transform: rotate(90deg); color: var(--primary); }
 
         textarea {
             width: 100%;
-            height: 300px;
-            background: rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
+            height: 350px;
+            background: #fffcfc;
+            border: 1px solid #efebe9;
+            border-radius: 12px;
             color: var(--text-main);
-            padding: 1rem;
-            font-family: 'Inter', sans-serif;
-            font-size: 1rem;
+            padding: 1.5rem;
+            font-family: 'Playfair Display', serif; /* Elegant font for writing */
+            font-size: 1.1rem;
+            line-height: 1.6;
             resize: none;
             margin-bottom: 1.5rem;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.02);
         }
 
         textarea:focus {
             outline: none;
-            border-color: var(--accent);
+            border-color: var(--primary);
+            background: #fff;
         }
 
         .modal-actions {
@@ -199,47 +273,86 @@
         }
 
         button {
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
             border: none;
             cursor: pointer;
             font-weight: 600;
-            transition: opacity 0.2s;
+            font-family: 'Lato', sans-serif;
+            transition: transform 0.2s, box-shadow 0.2s;
+            letter-spacing: 0.5px;
         }
 
-        .btn-save { background: var(--accent); color: #fff; }
-        .btn-lock { background: var(--gold); color: #000; }
-        .btn-close { background: transparent; color: var(--text-muted); border: 1px solid var(--text-muted); }
+        .btn-save { 
+            background: #fff; 
+            border: 1px solid var(--primary); 
+            color: var(--primary); 
+        }
+        
+        .btn-lock { 
+            background: linear-gradient(45deg, var(--primary), var(--accent)); 
+            color: #fff; 
+            box-shadow: 0 4px 15px rgba(216, 128, 158, 0.4);
+        }
 
-        button:hover { opacity: 0.9; }
+        .btn-close { 
+            background: transparent; 
+            color: var(--text-muted); 
+        }
 
-        /* Disabled state for locked items */
+        button:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1); 
+        }
+        .btn-save:hover { background: #fff0f5; }
+
+        /* Locked State Design */
         .locked-message {
             text-align: center;
             padding: 3rem;
-            color: var(--gold);
+            color: var(--primary);
         }
-        .locked-message i { font-size: 3rem; margin-bottom: 1rem; display: block;}
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
+        .locked-message i { 
+            font-size: 4rem; 
+            margin-bottom: 1.5rem; 
+            display: block;
+            color: var(--primary);
+            animation: heartbeat 2s infinite;
+        }
+        .locked-message h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
         }
 
         @media (max-width: 600px) {
-            h1 { font-size: 2rem; }
+            h1 { font-size: 3.5rem; }
             .grid { grid-template-columns: 1fr; }
+            .modal { padding: 1.5rem; width: 95%; }
+            textarea { height: 250px; }
         }
     </style>
 </head>
 <body>
 
+    <script>
+        // Generate floating hearts
+        for(let i=0; i<15; i++) {
+            let heart = document.createElement('i');
+            heart.className = 'fa-solid fa-heart bg-heart';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 10 + 10) + 's';
+            heart.style.fontSize = (Math.random() * 30 + 10) + 'px';
+            document.body.appendChild(heart);
+        }
+    </script>
+
     <header>
-        <h1>Chronicles 2026</h1>
-        <p style="color: var(--text-muted);">Write your history. Seal it. Revisit in the future.</p>
+        <h1>Our Love Letters</h1>
+        <p class="subtitle">Memories written today, cherished in 2026.</p>
         <div class="countdown-container">
-            <i class="fa-solid fa-hourglass-half" style="margin-right: 8px; color: var(--accent);"></i>
-            Unlocks in: <span id="countdown">Loading...</span>
+            <i class="fa-solid fa-heart fa-heart-pulse"></i>
+            Unlocking in: <span id="countdown">Loading...</span>
         </div>
     </header>
 
@@ -254,22 +367,22 @@
             </div>
             
             <div id="editor-area">
-                <textarea id="letterContent" placeholder="Dear future me..."></textarea>
+                <textarea id="letterContent" placeholder="My dearest..."></textarea>
                 <div class="modal-actions">
                     <button class="btn-close" onclick="closeModal()">Cancel</button>
                     <button class="btn-save" onclick="saveLetter()">Save Draft</button>
-                    <button class="btn-lock" onclick="lockLetter()"><i class="fa-solid fa-lock"></i> Seal Forever</button>
+                    <button class="btn-lock" onclick="lockLetter()"><i class="fa-solid fa-heart-circle-check"></i> Seal with Love</button>
                 </div>
-                <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 10px; text-align: right;">
-                    *Sealing locks this letter until Dec 31, 2026.
+                <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 15px; text-align: center; font-style: italic;">
+                    Sealing this letter keeps it safe and secret until Dec 31, 2026.
                 </p>
             </div>
 
             <div id="locked-area" style="display: none;">
                 <div class="locked-message">
-                    <i class="fa-solid fa-lock"></i>
-                    <h3>This memory is sealed.</h3>
-                    <p>You can open this letter on December 31st, 2026.</p>
+                    <i class="fa-solid fa-heart-lock"></i>
+                    <h3>Sealed for the Future</h3>
+                    <p style="font-family: 'Playfair Display', serif;">This memory is sleeping safely.<br>We will read it together on December 31st, 2026.</p>
                 </div>
                 <div class="modal-actions" style="justify-content: center;">
                     <button class="btn-close" onclick="closeModal()">Close</button>
@@ -303,8 +416,8 @@
             const distance = UNLOCK_DATE - now;
 
             if (distance < 0) {
-                document.getElementById("countdown").innerHTML = "UNLOCKED";
-                document.getElementById("countdown").style.color = "var(--success)";
+                document.getElementById("countdown").innerHTML = "Forever Open";
+                document.getElementById("countdown").style.color = "var(--primary)";
                 return;
             }
 
@@ -327,20 +440,21 @@
                 const card = document.createElement('div');
                 card.className = `card ${item.locked ? 'locked' : (item.text ? 'unlocked' : 'empty')}`;
                 
-                let icon = 'fa-pen-to-square'; // Default edit
-                let status = 'Empty';
+                let icon = 'fa-pen-nib'; // Default edit
+                let status = 'Write a Memory';
                 
                 if (item.locked) {
                     if (isGlobalUnlocked) {
                         icon = 'fa-envelope-open-text'; // Ready to read
-                        status = 'Ready to Read';
+                        status = 'Open Letter';
                         card.classList.remove('locked');
                         card.classList.add('unlocked');
                     } else {
-                        icon = 'fa-lock';
-                        status = 'Sealed';
+                        icon = 'fa-heart-lock'; // Romantic lock icon
+                        status = 'Sealed with Love';
                     }
                 } else if (item.text) {
+                    icon = 'fa-heart';
                     status = 'Draft Saved';
                 }
 
@@ -360,7 +474,7 @@
         // --- MODAL LOGIC ---
         function openModal(index) {
             currentMonthIndex = index;
-            modalTitle.innerText = MONTHS[index] + " 2026";
+            modalTitle.innerText = MONTHS[index];
             const item = data[index];
             const now = new Date().getTime();
             const isGlobalUnlocked = now >= UNLOCK_DATE;
@@ -408,10 +522,10 @@
 
         function lockLetter() {
             if(!textarea.value.trim()) {
-                alert("Please write something before sealing the letter.");
+                alert("Please write a sweet message before sealing.");
                 return;
             }
-            if(confirm("Are you sure? Once sealed, you cannot edit or read this until Dec 31, 2026.")) {
+            if(confirm("Are you ready to seal this memory? It will be kept safe until 2026.")) {
                 data[currentMonthIndex].text = textarea.value;
                 data[currentMonthIndex].locked = true;
                 saveData();
